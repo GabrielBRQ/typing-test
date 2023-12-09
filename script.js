@@ -10,9 +10,14 @@ document.addEventListener("DOMContentLoaded", function () {
   let correctCount = 0;
 
   button.addEventListener("click", function () {
-    monkeyType.style.display = "grid";
     button.style.display = "none";
     playAudio();
+    setTimeout(() => {
+      monkeyType.style.display = "grid";
+    }, 500);
+    setTimeout(() => {
+      updateLetter();
+    }, 1500);
   });
 
   function generateRandomLetter() {
@@ -21,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function updateLetter() {
-    lastPressedKey = '';
+    lastPressedKey = "";
     const randomLetter = generateRandomLetter();
     letterDiv.textContent = randomLetter;
     letterDiv.classList.remove("correct");
@@ -38,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ) {
       lastPressedKey = pressedKey;
       letterDiv.classList.add("correct");
-      playRight()
+      playRight();
       correctCount++;
 
       // Atualiza a largura da barra de progresso
@@ -52,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
       setTimeout(() => {
         updateLetter();
       }, 255);
-    } else {
+    } else if (monkeyType.style.display === "grid") {
       letterDiv.classList.add("incorrect");
       playWrong();
       setTimeout(() => {
@@ -78,9 +83,6 @@ document.addEventListener("DOMContentLoaded", function () {
     audio.play();
     audio.volume = 0.5;
   }
-
-  // Inicializa a letra
-  updateLetter();
 
   // Adiciona o listener para eventos de teclado
   document.addEventListener("keypress", handleKeyPress);
